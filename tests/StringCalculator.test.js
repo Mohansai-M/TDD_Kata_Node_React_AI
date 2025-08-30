@@ -52,4 +52,12 @@ describe("StringCalculator Tests", () => {
   it("works fine if no negatives are present", () => {
     expect(calc.add("1,2,3")).toBe(6);
   });
+
+  // Step 7
+  it("tracks how many times add() was called", () => {
+    expect(calc.getCalledCount()).toBe(0); 
+    calc.add("1,2");
+    calc.add("3,4");
+    expect(calc.getCalledCount()).toBe(2);
+  });
 });
