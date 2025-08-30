@@ -6,7 +6,19 @@ class StringCalculator {
   add(numbers) {
     this.callCount++;
     if (!numbers) return 0;
-    const nums = numbers.split(/,|\n/).map(Number);
+
+    let delimiterRegex = /,|\n/;
+    let numStr = numbers;
+
+    const customDelimiterMatch = numbers.match(/^\/\/(.)\n/);
+    if (customDelimiterMatch) {
+      const customDelimiter = customDelimiterMatch[1];
+      delimiterRegex = new RegExp(`[${customDelimiter}\n]`);
+      numStr = numbers.slice(customDelimiterMatch[0].length);
+    }
+
+    const nums = numStr.split(delimiterRegex).map(Number);
+
     return nums.reduce((a, b) => a + b, 0);
   }
 

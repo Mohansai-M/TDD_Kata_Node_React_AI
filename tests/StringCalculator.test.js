@@ -25,4 +25,19 @@ describe("StringCalculator Step 2", () => {
     const calc = new StringCalculator();
     expect(calc.add("1,2,3,4,5,6,7,8,9,10")).toBe(55);
   });
+
+  it("supports custom single-character delimiter ';'", () => {
+    const calc = new StringCalculator();
+    expect(calc.add("//;\n1;2")).toBe(3);
+  });
+
+  it("supports custom delimiter with multiple numbers", () => {
+    const calc = new StringCalculator();
+    expect(calc.add("//;\n1;2;3")).toBe(6);
+  });
+
+  it("supports default delimiters with multiple numbers", () => {
+    const calc = new StringCalculator();
+    expect(calc.add("1\n2,3")).toBe(6);
+  });
 });
