@@ -1,43 +1,55 @@
 const { StringCalculator } = require("../src/StringCalculator");
 
-describe("StringCalculator Step 2", () => {
+describe("StringCalculator Tests", () => {
+  let calc;
+
+  beforeEach(() => {
+    calc = new StringCalculator();
+  });
+
+  // Step 1
   it("returns 0 for empty string", () => {
-    const calc = new StringCalculator();
     expect(calc.add("")).toBe(0);
   });
 
-  it("returns 1 for '1'", () => {
-    const calc = new StringCalculator();
+  it("returns number for single input", () => {
     expect(calc.add("1")).toBe(1);
   });
 
-  it("returns 3 for '1,2'", () => {
-    const calc = new StringCalculator();
+  it("returns sum of two numbers", () => {
     expect(calc.add("1,2")).toBe(3);
   });
 
-  it("returns 10 for '1,2,3,4'", () => {
-    const calc = new StringCalculator();
+  // Step 2
+  it("returns sum for multiple numbers", () => {
     expect(calc.add("1,2,3,4")).toBe(10);
-  });
-
-  it("returns 55 for numbers 1 to 10", () => {
-    const calc = new StringCalculator();
     expect(calc.add("1,2,3,4,5,6,7,8,9,10")).toBe(55);
   });
 
-  it("supports custom single-character delimiter ';'", () => {
-    const calc = new StringCalculator();
-    expect(calc.add("//;\n1;2")).toBe(3);
+  // Step 3
+  it("supports new line as delimiter along with commas", () => {
+    expect(calc.add("1\n2,3")).toBe(6);
   });
 
-  it("supports custom delimiter with multiple numbers", () => {
-    const calc = new StringCalculator();
+  // Step 4
+  it("supports custom single-character delimiter", () => {
+    expect(calc.add("//;\n1;2")).toBe(3);
     expect(calc.add("//;\n1;2;3")).toBe(6);
   });
 
-  it("supports default delimiters with multiple numbers", () => {
-    const calc = new StringCalculator();
-    expect(calc.add("1\n2,3")).toBe(6);
+  // Step 5
+  it("throws error when one negative number is passed", () => {
+    expect(() => calc.add("1,-2,3")).toThrow("negatives not allowed: -2");
+  });
+
+  // Step 6
+  it("throws error when multiple negatives are passed", () => {
+    expect(() => calc.add("1,-2,3,-5")).toThrow(
+      "negatives not allowed: -2, -5"
+    );
+  });
+
+  it("works fine if no negatives are present", () => {
+    expect(calc.add("1,2,3")).toBe(6);
   });
 });
