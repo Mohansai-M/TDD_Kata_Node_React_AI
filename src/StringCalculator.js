@@ -24,7 +24,9 @@ class StringCalculator {
       throw new Error(`negatives not allowed: ${negatives.join(", ")}`);
     }
 
-    return nums.reduce((a, b) => a + b, 0);
+    return nums
+      .filter(n => n <= 1000) 
+      .reduce((a, b) => a + b, 0);
   }
 
   getCalledCount() {

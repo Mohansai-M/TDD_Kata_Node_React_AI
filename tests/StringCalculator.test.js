@@ -55,9 +55,15 @@ describe("StringCalculator Tests", () => {
 
   // Step 7
   it("tracks how many times add() was called", () => {
-    expect(calc.getCalledCount()).toBe(0); 
+    expect(calc.getCalledCount()).toBe(0);
     calc.add("1,2");
     calc.add("3,4");
     expect(calc.getCalledCount()).toBe(2);
+  });
+
+  // Step 8
+  test("ignores numbers bigger than 1000", () => {
+    expect(calc.add("2,1001")).toBe(2);
+    expect(calc.add("1000,2,3")).toBe(1005);
   });
 });
