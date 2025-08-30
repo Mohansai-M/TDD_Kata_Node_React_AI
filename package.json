@@ -1,0 +1,27 @@
+{
+  "name": "tdd_kata_node_react_ai",
+  "version": "1.0.0",
+  "description": "TDD Kata implementation of String Calculator with Node.js",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mohansai-M/TDD_Kata_Node_React_AI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Mohansai-M/TDD_Kata_Node_React_AI/issues"
+  },
+  "homepage": "https://github.com/Mohansai-M/TDD_Kata_Node_React_AI#readme",
+  "devDependencies": {
+    "jest": "^30.1.1"
+  }
+}
