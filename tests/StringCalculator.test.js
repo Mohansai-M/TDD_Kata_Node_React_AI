@@ -66,4 +66,14 @@ describe("StringCalculator Tests", () => {
     expect(calc.add("2,1001")).toBe(2);
     expect(calc.add("1000,2,3")).toBe(1005);
   });
+
+  // Step 9
+  test("supports custom delimiter of any length", () => {
+    expect(calc.add("//[***]\n1***2***3")).toBe(6);
+  });
+
+  test("supports different long delimiters", () => {
+    expect(calc.add("//[###]\n4###5###6")).toBe(15);
+    expect(calc.add("//[abc]\n1abc2abc3")).toBe(6);
+  });
 });

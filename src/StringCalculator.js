@@ -10,11 +10,22 @@ class StringCalculator {
     let delimiterRegex = /,|\n/;
     let numStr = numbers;
 
-    const customDelimiterMatch = numbers.match(/^\/\/(.)\n/);
-    if (customDelimiterMatch) {
-      const customDelimiter = customDelimiterMatch[1];
-      delimiterRegex = new RegExp(`[${customDelimiter}\n]`);
-      numStr = numbers.slice(customDelimiterMatch[0].length);
+
+    const longDelimiterMatch = numbers.match(/^\/\/\[(.+)\]\n/);
+    if (longDelimiterMatch) {
+      const customDelimiter = longDelimiterMatch[1];
+      delimiterRegex = new RegExp(
+        customDelimiter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+      ); 
+      numStr = numbers.slice(longDelimiterMatch[0].length);
+    } else {
+      
+      const customDelimiterMatch = numbers.match(/^\/\/(.)\n/);
+      if (customDelimiterMatch) {
+        const customDelimiter = customDelimiterMatch[1];
+        delimiterRegex = new RegExp(`[${customDelimiter}\n]`);
+        numStr = numbers.slice(customDelimiterMatch[0].length);
+      }
     }
 
     const nums = numStr.split(delimiterRegex).map(Number);
