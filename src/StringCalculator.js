@@ -7,26 +7,28 @@ class StringCalculator {
     this.callCount++;
     if (!numbers) return 0;
 
-    let delimiterRegex = /,|\n/;
+    let delimiters = [",", "\n"];
     let numStr = numbers;
 
 
-    const longDelimiterMatch = numbers.match(/^\/\/\[(.+)\]\n/);
-    if (longDelimiterMatch) {
-      const customDelimiter = longDelimiterMatch[1];
-      delimiterRegex = new RegExp(
-        customDelimiter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-      ); 
-      numStr = numbers.slice(longDelimiterMatch[0].length);
-    } else {
-      
-      const customDelimiterMatch = numbers.match(/^\/\/(.)\n/);
-      if (customDelimiterMatch) {
-        const customDelimiter = customDelimiterMatch[1];
-        delimiterRegex = new RegExp(`[${customDelimiter}\n]`);
-        numStr = numbers.slice(customDelimiterMatch[0].length);
+    if (numbers.startsWith("//")) {
+      const delimiterSection = numbers.match(/^\/\/(.+)\n/)[1];
+      numStr = numbers.split("\n").slice(1).join("\n");
+
+      const customDelimiters = delimiterSection.match(/\[.*?\]/g);
+      if (customDelimiters) {
+        delimiters = delimiters.concat(
+          customDelimiters.map((d) => d.slice(1, -1))
+        );
+      } else {
+        delimiters.push(delimiterSection);
       }
     }
+
+
+    const delimiterRegex = new RegExp(
+      delimiters.map((d) => escapeRegex(d)).join("|")
+    );
 
     const nums = numStr.split(delimiterRegex).map(Number);
 
@@ -43,6 +45,10 @@ class StringCalculator {
   getCalledCount() {
     return this.callCount;
   }
+}
+
+function escapeRegex(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 module.exports = { StringCalculator };

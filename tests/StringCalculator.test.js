@@ -61,13 +61,13 @@ describe("StringCalculator Tests", () => {
     expect(calc.getCalledCount()).toBe(2);
   });
 
-  // Step 8
+  // Step 9
   test("ignores numbers bigger than 1000", () => {
     expect(calc.add("2,1001")).toBe(2);
     expect(calc.add("1000,2,3")).toBe(1005);
   });
 
-  // Step 9
+  // Step 10
   test("supports custom delimiter of any length", () => {
     expect(calc.add("//[***]\n1***2***3")).toBe(6);
   });
@@ -75,5 +75,29 @@ describe("StringCalculator Tests", () => {
   test("supports different long delimiters", () => {
     expect(calc.add("//[###]\n4###5###6")).toBe(15);
     expect(calc.add("//[abc]\n1abc2abc3")).toBe(6);
+  });
+
+  //step 11 & 12
+
+  test("supports multiple single-character delimiters", () => {
+    expect(calc.add("//[*][%]\n1*2%3")).toBe(6);
+  });
+
+  test("supports multiple delimiters with length > 1", () => {
+    expect(calc.add("//[**][%%]\n1**2%%3")).toBe(6);
+  });
+
+  test("supports mix of default and multiple custom delimiters", () => {
+    expect(calc.add("//[;][:]\n1;2:3")).toBe(6);
+  });
+
+  test("throws error if negative numbers exist with multiple delimiters", () => {
+    expect(() => calc.add("//[;][:]\n1;-2:3")).toThrow(
+      "negatives not allowed: -2"
+    );
+  });
+
+  test("ignores numbers > 1000 with multiple delimiters", () => {
+    expect(calc.add("//[;][:]\n2;1001:3")).toBe(5);
   });
 });
